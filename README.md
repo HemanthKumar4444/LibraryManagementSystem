@@ -1,4 +1,4 @@
-# Library Management System — Upgraded Final Project
+# Library Management System 
 
 A full-stack **Library Management System** built with **Java Spring Boot 3 + React (Vite + TypeScript)** and an **H2 file database**.
 
