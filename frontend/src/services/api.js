@@ -1,6 +1,7 @@
 import axios from 'axios'
 
-const API_BASE = '/api'
+const API_BASE =
+  import.meta.env.VITE_API_BASE_URL || 'http://localhost:8081/api'
 
 const api = axios.create({
   baseURL: API_BASE,
@@ -30,10 +31,8 @@ api.interceptors.response.use(
 export default api
 
 export const authAPI = {
-  login: (username, password) =>
-    api.post('/auth/login', { username, password }),
-  register: (payload) =>
-    api.post('/auth/register', payload),
+  login: (username, password) => api.post('/auth/login', { username, password }),
+  register: (payload) => api.post('/auth/register', payload),
   me: () => api.get('/auth/me'),
 }
 
@@ -66,7 +65,8 @@ export const borrowingsAPI = {
   borrow: (data) => api.post('/borrowings/borrow', data),
   return: (id) => api.post(`/borrowings/${id}/return`),
   renew: (id) => api.post(`/borrowings/${id}/renew`),
-  updateDueDate: (id, dueDate) => api.put(`/borrowings/${id}/due-date`, { dueDate }),
+  updateDueDate: (id, dueDate) =>
+    api.put(`/borrowings/${id}/due-date`, { dueDate }),
   payFine: (id) => api.post(`/borrowings/${id}/pay-fine`),
 }
 

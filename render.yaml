@@ -1,0 +1,33 @@
+services:
+  - type: web
+    name: library-backend
+    env: docker
+    rootDir: backend
+    plan: free
+    dockerfilePath: ./Dockerfile
+    envVars:
+      - key: APP_JWT_SECRET
+        generateValue: true
+      - key: APP_JWT_EXPIRATION
+        value: 86400000
+      - key: DB_USERNAME
+        value: sa
+      - key: DB_PASSWORD
+        value: ""
+    disk:
+      name: library-data
+      mountPath: /var/data
+      sizeGB: 1
+
+  - type: static
+    name: library-frontend
+    rootDir: frontend
+    buildCommand: npm install && npm run build
+    publishPath: dist
+    envVars:
+      - key: VITE_API_BASE_URL
+        value: https://library-backend.onrender.com/api
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
